@@ -464,6 +464,7 @@ h3 {
   align-items: center;
   justify-content: space-between;
   gap: 28px;
+  margin-top: 48px;
   margin-bottom: 62px;
   padding: 42px;
   border-radius: var(--radius-lg);
