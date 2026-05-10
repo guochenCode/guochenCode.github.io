@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="郭晨的 Android 开发实习生个人简历网页，展示移动端开发经历、项目与技能。">
+  <title>郭晨 | Android 开发实习生</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="回到顶部">
+      <span class="brand-mark">G</span>
+      <span>郭晨</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-label="打开导航" aria-expanded="false">
+      <span></span>
+      <span></span>
+    </button>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="#about">概览</a>
+      <a href="#experience">经历</a>
+      <a href="#projects">项目</a>
+      <a href="#skills">技能</a>
+      <a class="nav-contact" href="mailto:2788267761@qq.com">联系我</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero section-shell" aria-labelledby="hero-title">
+      <div class="hero-content">
+        <p class="eyebrow">27 届 · 西南大学 · Android / Flutter</p>
+        <h1 id="hero-title">把移动端体验做得稳定、顺手，也有一点好玩。</h1>
+        <p class="hero-lead">
+          我是郭晨，目标岗位是 Android 开发实习生。过去的实习和项目围绕搜索体验、资源列表、相机水印、图片处理与绘图创作展开，熟悉 Kotlin、Java，并有 Flutter 跨平台开发经验。
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="mailto:2788267761@qq.com">发送邮件</a>
+          <a class="button secondary" href="tel:19579957709">电话联系</a>
+          <a class="text-link" href="https://blog.csdn.net/aldkdb?type=blog" target="_blank" rel="noreferrer">查看技术博客</a>
+        </div>
+      </div>
+      <aside class="hero-card" aria-label="候选人摘要">
+        <div class="profile-avatar">GC</div>
+        <dl class="quick-facts">
+          <div>
+            <dt>方向</dt>
+            <dd>Android 开发实习</dd>
+          </div>
+          <div>
+            <dt>学校</dt>
+            <dd>西南大学 · 本科 211</dd>
+          </div>
+          <div>
+            <dt>邮箱</dt>
+            <dd><a href="mailto:2788267761@qq.com">2788267761@qq.com</a></dd>
+          </div>
+          <div>
+            <dt>电话</dt>
+            <dd><a href="tel:19579957709">19579957709</a></dd>
+          </div>
+        </dl>
+      </aside>
+    </section>
+
+    <section id="about" class="section-shell split-section">
+      <div>
+        <p class="section-kicker">Overview</p>
+        <h2>移动端开发的优势切片</h2>
+      </div>
+      <div class="highlight-grid">
+        <article class="highlight-card">
+          <span class="card-index">01</span>
+          <h3>响应式业务架构</h3>
+          <p>在搜索模块中使用 Kotlin Flow + StateFlow 组织状态流转，并用 MMKV 与 LRU 策略维护最近搜索历史。</p>
+        </article>
+        <article class="highlight-card">
+          <span class="card-index">02</span>
+          <h3>复杂 UI 落地</h3>
+          <p>用 EpoxyRecyclerView、ViewPager2、TabLayout、自定义 View 等方案处理列表、Tab、调色盘和绘制交互。</p>
+        </article>
+        <article class="highlight-card">
+          <span class="card-index">03</span>
+          <h3>跨平台与多媒体</h3>
+          <p>参与 Flutter 相机水印项目，覆盖拍摄、裁剪、压图、保存、分享、POI 搜索和天气数据接入。</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="experience" class="section-shell">
+      <div class="section-heading">
+        <p class="section-kicker">Experience</p>
+        <h2>实习经历时间线</h2>
+        <p>点击经历卡片可以展开更多实现细节，适合快速浏览，也方便面试官聚焦关键技术点。</p>
+      </div>
+
+      <div class="timeline">
+        <article class="timeline-item is-open">
+          <button class="timeline-trigger" type="button" aria-expanded="true">
+            <span class="timeline-date">2025.10 - 2026.02</span>
+            <span class="timeline-title">北京展心展力信息科技有限公司（MetaApp）</span>
+            <span class="timeline-role">安卓开发实习生 · 233派对</span>
+          </button>
+          <div class="timeline-panel">
+            <p>参与 Android / Kotlin 业务开发，重点负责搜索、用户资源和高频点击防护相关体验。</p>
+            <ul>
+              <li>基于 Kotlin Flow + StateFlow 构建响应式搜索架构，使用 MMKV 保存本地搜索历史。</li>
+              <li>设计 LRU 淘汰策略，仅保留最近 5 条搜索记录，降低历史数据噪声。</li>
+              <li>使用 EpoxyRecyclerView 构建资源列表 UI，通过 ViewPager2 + TabLayout 实现不同资源类型切换。</li>
+              <li>封装 OnAntiViolenceClickListener，默认 600ms 间隔防止搜索、取消、清空、历史 Item 等场景重复点击。</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="timeline-item">
+          <button class="timeline-trigger" type="button" aria-expanded="false">
+            <span class="timeline-date">2025.06 - 2025.09</span>
+            <span class="timeline-title">北京与你科技有限公司</span>
+            <span class="timeline-role">客户端开发实习生 · 与你打卡</span>
+          </button>
+          <div class="timeline-panel">
+            <p>参与 Flutter / Android / Dart / Kotlin 项目，为拍摄图片或相册图片添加水印，并支持 POI、裁剪、分享等能力。</p>
+            <ul>
+              <li>支持图片拍摄比例切换、拍摄倒计时、闪光灯、相机变焦等相机能力。</li>
+              <li>支持默认图片比例、显示语言等数据持久化，并接入水印 POI 地理位置选择与天气状态获取。</li>
+              <li>使用 Riverpod 管理全局状态与业务逻辑，拆分页面状态和刷新逻辑。</li>
+              <li>集成 cameraawesome、ffmpeg_kit_flutter_new、extended_image、image_gallery_saver_plus 完成拍照、压图、裁剪和保存。</li>
+              <li>对接高德 SDK 与知心天气接口，为水印提供周边搜索、关键字搜索和天气数据。</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="projects" class="section-shell">
+      <div class="section-heading">
+        <p class="section-kicker">Projects</p>
+        <h2>项目与能力展示</h2>
+        <p>用筛选按钮查看不同能力维度，突出 Android UI、状态管理、多媒体和工程协作的实际落点。</p>
+      </div>
+
+      <div class="filter-bar" role="list" aria-label="项目筛选">
+        <button class="filter-button is-active" type="button" data-filter="all">全部</button>
+        <button class="filter-button" type="button" data-filter="android">Android</button>
+        <button class="filter-button" type="button" data-filter="flutter">Flutter</button>
+        <button class="filter-button" type="button" data-filter="ui">UI 交互</button>
+        <button class="filter-button" type="button" data-filter="media">多媒体</button>
+      </div>
+
+      <div class="project-grid">
+        <article class="project-card" data-tags="android ui">
+          <div class="project-meta">
+            <span>Android · Kotlin</span>
+            <span>实习业务</span>
+          </div>
+          <h3>233派对搜索与资源模块</h3>
+          <p>将搜索状态、历史存储、资源列表和 Tab 切换串联起来，兼顾可维护性和用户操作流畅度。</p>
+          <div class="tag-row">
+            <span>Kotlin Flow</span>
+            <span>StateFlow</span>
+            <span>MMKV</span>
+            <span>EpoxyRecyclerView</span>
+          </div>
+        </article>
+
+        <article class="project-card" data-tags="flutter media">
+          <div class="project-meta">
+            <span>Flutter · Dart</span>
+            <span>实习业务</span>
+          </div>
+          <h3>与你打卡相机水印能力</h3>
+          <p>围绕拍摄、裁剪、压图、保存、分享和水印数据接入，完成一条完整的图片生产链路。</p>
+          <div class="tag-row">
+            <span>Riverpod</span>
+            <span>cameraawesome</span>
+            <span>FFmpeg</span>
+            <span>高德 SDK</span>
+          </div>
+        </article>
+
+        <article class="project-card" data-tags="android ui">
+          <div class="project-meta">
+            <span>Android · Java/Kotlin</span>
+            <span>独立开发</span>
+          </div>
+          <h3>小画家 Pad 绘图软件</h3>
+          <p>使用 MVVM 拆分界面和绘制逻辑，通过自定义 View 实现圆形调色盘，并用 Broadcast 同步工具栏交互状态。</p>
+          <div class="tag-row">
+            <span>MVVM</span>
+            <span>Custom View</span>
+            <span>LiveData</span>
+            <span>Broadcast</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="skills" class="section-shell skills-section">
+      <div class="section-heading">
+        <p class="section-kicker">Skills</p>
+        <h2>技能地图</h2>
+        <p>选择一个技能组，查看我在移动端开发中已经接触并实践过的能力。</p>
+      </div>
+
+      <div class="skill-switcher" role="tablist" aria-label="技能分类">
+        <button class="skill-tab is-active" type="button" role="tab" aria-selected="true" data-skill="language">语言基础</button>
+        <button class="skill-tab" type="button" role="tab" aria-selected="false" data-skill="android">Android 基础</button>
+        <button class="skill-tab" type="button" role="tab" aria-selected="false" data-skill="flutter">Flutter 经验</button>
+        <button class="skill-tab" type="button" role="tab" aria-selected="false" data-skill="collab">工程协作</button>
+      </div>
+
+      <div class="skill-panel" id="skill-panel" aria-live="polite">
+        <h3>Java / Kotlin</h3>
+        <p>熟悉 Java、Kotlin，理解面向对象的封装、继承、多态，了解 Kotlin 协程、高阶函数和扩展函数。</p>
+      </div>
+    </section>
+
+    <section class="section-shell contact-section">
+      <div>
+        <p class="section-kicker">Contact</p>
+        <h2>期待参与更有挑战的移动端产品。</h2>
+      </div>
+      <div class="contact-actions">
+        <a class="button primary" href="mailto:2788267761@qq.com">2788267761@qq.com</a>
+        <a class="button secondary" href="tel:19579957709">19579957709</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 郭晨. Built for GitHub Pages.</p>
+    <a href="#top">回到顶部</a>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
