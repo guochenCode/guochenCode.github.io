@@ -1,105 +1,299 @@
-const header = document.querySelector(".site-header");
-const navToggle = document.querySelector(".nav-toggle");
-const navLinks = document.querySelectorAll(".site-nav a");
-const timelineItems = document.querySelectorAll(".timeline-item");
-const filterButtons = document.querySelectorAll(".filter-button");
-const projectCards = document.querySelectorAll(".project-card");
-const skillTabs = document.querySelectorAll(".skill-tab");
-const skillPanel = document.querySelector("#skill-panel");
+const header = document.querySelector("[data-header]");
+const navToggle = document.querySelector("[data-nav-toggle]");
+const navigation = document.querySelector("[data-nav]");
 
-const skillContent = {
-  language: {
-    title: "Java / Kotlin",
-    text: "熟悉 Java、Kotlin，理解面向对象的封装、继承、多态，了解 Kotlin 协程、高阶函数和扩展函数。"
-  },
-  android: {
-    title: "Android 组件与机制",
-    text: "了解安卓四大组件、View 绘制流程、事件分发机制、RecyclerView 缓存机制和 Handler 消息机制。"
-  },
-  flutter: {
-    title: "Flutter 跨平台经验",
-    text: "有 Flutter 开发经验，了解常见 Widget 组件和三方库使用，实习中实践过 Riverpod、相机、图片裁剪与保存等能力。"
-  },
-  collab: {
-    title: "版本控制与团队协作",
-    text: "熟悉代码版本控制，具备团队协作开发经验，能够在既有业务模块中完成需求开发与体验优化。"
+document.querySelectorAll("[data-current-year]").forEach((element) => {
+  element.textContent = String(new Date().getFullYear());
+});
+
+const setNavigationState = (isOpen) => {
+  if (!header || !navToggle) {
+    return;
   }
+
+  header.classList.toggle("is-nav-open", isOpen);
+  document.body.classList.toggle("nav-open", isOpen);
+  navToggle.setAttribute("aria-expanded", String(isOpen));
+  navToggle.setAttribute("aria-label", isOpen ? "关闭导航" : "打开导航");
 };
 
 navToggle?.addEventListener("click", () => {
-  const isOpen = header.classList.toggle("is-nav-open");
-  navToggle.setAttribute("aria-expanded", String(isOpen));
+  setNavigationState(navToggle.getAttribute("aria-expanded") !== "true");
 });
 
-navLinks.forEach((link) => {
-  link.addEventListener("click", () => {
-    header.classList.remove("is-nav-open");
-    navToggle?.setAttribute("aria-expanded", "false");
-  });
+navigation?.querySelectorAll("a").forEach((link) => {
+  link.addEventListener("click", () => setNavigationState(false));
 });
 
-timelineItems.forEach((item) => {
-  const trigger = item.querySelector(".timeline-trigger");
-
-  trigger?.addEventListener("click", () => {
-    const isOpen = item.classList.toggle("is-open");
-    trigger.setAttribute("aria-expanded", String(isOpen));
-  });
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    setNavigationState(false);
+  }
 });
 
-filterButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    const filter = button.dataset.filter;
+window.addEventListener(
+  "scroll",
+  () => header?.classList.toggle("is-scrolled", window.scrollY > 20),
+  { passive: true }
+);
 
-    filterButtons.forEach((item) => item.classList.remove("is-active"));
-    button.classList.add("is-active");
-
-    projectCards.forEach((card) => {
-      const tags = card.dataset.tags?.split(" ") ?? [];
-      const shouldShow = filter === "all" || tags.includes(filter);
-      card.classList.toggle("is-hidden", !shouldShow);
-    });
-  });
-});
-
-skillTabs.forEach((tab) => {
-  tab.addEventListener("click", () => {
-    const skill = tab.dataset.skill;
-    const content = skillContent[skill];
-
-    if (!content) {
+document.querySelectorAll(".experience-item").forEach((item) => {
+  item.addEventListener("toggle", () => {
+    if (!item.open) {
       return;
     }
 
-    skillTabs.forEach((item) => {
-      item.classList.remove("is-active");
-      item.setAttribute("aria-selected", "false");
+    document.querySelectorAll(".experience-item").forEach((otherItem) => {
+      if (otherItem !== item) {
+        otherItem.removeAttribute("open");
+      }
     });
-
-    tab.classList.add("is-active");
-    tab.setAttribute("aria-selected", "true");
-    skillPanel.innerHTML = `<h3>${content.title}</h3><p>${content.text}</p>`;
   });
 });
 
-const navObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) {
+const carousel = document.querySelector("[data-carousel]");
+
+if (carousel) {
+  const track = carousel.querySelector("[data-carousel-track]");
+  const viewport = carousel.querySelector(".carousel-viewport");
+  const slides = Array.from(carousel.querySelectorAll("[data-carousel-slide]"));
+  const previousButton = carousel.querySelector("[data-carousel-prev]");
+  const nextButton = carousel.querySelector("[data-carousel-next]");
+  const dotsContainer = carousel.querySelector("[data-carousel-dots]");
+  const status = carousel.querySelector("[data-carousel-status]");
+  const autoplayToggle = carousel.querySelector("[data-carousel-toggle]");
+  const autoplayToggleIcon = carousel.querySelector("[data-carousel-toggle-icon]");
+  const autoplayToggleLabel = carousel.querySelector("[data-carousel-toggle-label]");
+  const lightbox = document.querySelector("[data-lightbox]");
+  const lightboxImage = lightbox?.querySelector("[data-lightbox-image]");
+  const lightboxCaption = lightbox?.querySelector("[data-lightbox-caption]");
+  const lightboxClose = lightbox?.querySelector("[data-lightbox-close]");
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const dots = Array.from(carousel.querySelectorAll("[data-carousel-thumb]"));
+  let activeIndex = 0;
+  let timer = null;
+  let pointerStart = null;
+  let lastSwipeAt = 0;
+  let lightboxTrigger = null;
+  let isLightboxOpen = false;
+  let autoplayPaused = prefersReducedMotion;
+
+  const showSlide = (nextIndex) => {
+    activeIndex = (nextIndex + slides.length) % slides.length;
+    track.style.transform = `translateX(-${activeIndex * 100}%)`;
+
+    slides.forEach((slide, index) => {
+      const isActive = index === activeIndex;
+      slide.setAttribute("aria-hidden", String(!isActive));
+      slide.querySelectorAll("button, a").forEach((element) => {
+        element.tabIndex = isActive ? 0 : -1;
+      });
+    });
+
+    dots.forEach((dot, index) => {
+      const isActive = index === activeIndex;
+      dot.classList.toggle("is-active", isActive);
+      dot.setAttribute("aria-current", isActive ? "true" : "false");
+
+      if (isActive && dotsContainer && dotsContainer.scrollWidth > dotsContainer.clientWidth) {
+        const targetLeft = dot.offsetLeft - (dotsContainer.clientWidth - dot.clientWidth) / 2;
+        dotsContainer.scrollTo({
+          left: targetLeft,
+          behavior: prefersReducedMotion ? "auto" : "smooth",
+        });
+      }
+    });
+
+    if (status) {
+      status.textContent = `${activeIndex + 1} / ${slides.length}`;
+    }
+  };
+
+  const stopAutoplay = () => {
+    window.clearInterval(timer);
+    timer = null;
+  };
+
+  const startAutoplay = (force = false) => {
+    if (
+      autoplayPaused ||
+      timer ||
+      isLightboxOpen ||
+      document.hidden ||
+      (!force && carousel.matches(":hover")) ||
+      (!force && carousel.contains(document.activeElement))
+    ) {
+      return;
+    }
+
+    timer = window.setInterval(() => showSlide(activeIndex + 1), 4200);
+  };
+
+  const updateAutoplayControl = () => {
+    autoplayToggle?.setAttribute("aria-pressed", String(autoplayPaused));
+    autoplayToggle?.setAttribute("aria-label", autoplayPaused ? "继续自动播放" : "暂停自动播放");
+
+    if (autoplayToggleIcon) {
+      autoplayToggleIcon.textContent = autoplayPaused ? "▶" : "Ⅱ";
+    }
+
+    if (autoplayToggleLabel) {
+      autoplayToggleLabel.textContent = autoplayPaused ? "播放" : "暂停";
+    }
+  };
+
+  if (dots.length === 0) {
+    slides.forEach((_, index) => {
+      const dot = document.createElement("button");
+      dot.type = "button";
+      dot.className = "carousel-dot";
+      dot.setAttribute("aria-label", `查看第 ${index + 1} 张截图`);
+      dotsContainer?.append(dot);
+      dots.push(dot);
+    });
+  }
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener("click", () => {
+      showSlide(index);
+      stopAutoplay();
+      startAutoplay();
+    });
+  });
+
+  autoplayToggle?.addEventListener("click", () => {
+    autoplayPaused = !autoplayPaused;
+    updateAutoplayControl();
+
+    if (autoplayPaused) {
+      stopAutoplay();
+    } else {
+      startAutoplay(true);
+    }
+  });
+
+  previousButton?.addEventListener("click", () => {
+    showSlide(activeIndex - 1);
+    stopAutoplay();
+    startAutoplay();
+  });
+
+  nextButton?.addEventListener("click", () => {
+    showSlide(activeIndex + 1);
+    stopAutoplay();
+    startAutoplay();
+  });
+
+  carousel.addEventListener("mouseenter", stopAutoplay);
+  carousel.addEventListener("mouseleave", startAutoplay);
+  carousel.addEventListener("focusin", stopAutoplay);
+  carousel.addEventListener("focusout", (event) => {
+    if (!carousel.contains(event.relatedTarget)) {
+      startAutoplay();
+    }
+  });
+
+  carousel.addEventListener("keydown", (event) => {
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") {
+      return;
+    }
+
+    event.preventDefault();
+    showSlide(activeIndex + (event.key === "ArrowRight" ? 1 : -1));
+    stopAutoplay();
+    startAutoplay();
+  });
+
+  viewport?.addEventListener("pointerdown", (event) => {
+    if (event.pointerType === "mouse" && event.button !== 0) {
+      return;
+    }
+
+    pointerStart = event.clientX;
+  });
+
+  viewport?.addEventListener("pointerup", (event) => {
+    if (pointerStart === null) {
+      return;
+    }
+
+    const distance = event.clientX - pointerStart;
+    pointerStart = null;
+
+    if (Math.abs(distance) < 45) {
+      return;
+    }
+
+    lastSwipeAt = Date.now();
+    showSlide(activeIndex + (distance < 0 ? 1 : -1));
+    stopAutoplay();
+    startAutoplay();
+  });
+
+  viewport?.addEventListener("pointercancel", () => {
+    pointerStart = null;
+  });
+
+  viewport?.addEventListener(
+    "click",
+    (event) => {
+      if (Date.now() - lastSwipeAt < 350) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    },
+    true
+  );
+
+  carousel.querySelectorAll("[data-lightbox-trigger]").forEach((trigger) => {
+    trigger.addEventListener("click", () => {
+      if (!lightbox || !lightboxImage || !lightboxCaption) {
         return;
       }
 
-      const currentLink = document.querySelector(`.site-nav a[href="#${entry.target.id}"]`);
-      navLinks.forEach((link) => link.classList.remove("is-current"));
-      currentLink?.classList.add("is-current");
-    });
-  },
-  {
-    rootMargin: "-35% 0px -55% 0px",
-    threshold: 0
-  }
-);
+      const image = trigger.querySelector("img");
+      const slide = trigger.closest("[data-carousel-slide]");
+      const title = slide?.querySelector(".shot-caption h2")?.textContent ?? "项目截图";
+      const description = slide?.querySelector(".shot-caption p")?.textContent ?? "";
 
-document.querySelectorAll("main section[id]").forEach((section) => {
-  navObserver.observe(section);
-});
+      if (!image) {
+        return;
+      }
+
+      lightboxTrigger = trigger;
+      lightboxImage.src = image.currentSrc || image.src;
+      lightboxImage.alt = image.alt;
+      lightboxCaption.textContent = description ? `${title} · ${description}` : title;
+      isLightboxOpen = true;
+      stopAutoplay();
+      lightbox.showModal();
+    });
+  });
+
+  lightboxClose?.addEventListener("click", () => lightbox?.close());
+
+  lightbox?.addEventListener("click", (event) => {
+    if (event.target === lightbox) {
+      lightbox.close();
+    }
+  });
+
+  lightbox?.addEventListener("close", () => {
+    isLightboxOpen = false;
+    lightboxImage?.removeAttribute("src");
+    lightboxTrigger?.focus();
+    startAutoplay();
+  });
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      stopAutoplay();
+    } else {
+      startAutoplay();
+    }
+  });
+
+  showSlide(0);
+  updateAutoplayControl();
+  startAutoplay();
+}

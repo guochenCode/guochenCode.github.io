@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="小画家：Android 多人实时协作绘画板项目核心介绍。">
+  <meta name="theme-color" content="#171812">
+  <title>小画家｜郭晨</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="project-page">
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+
+  <header class="site-header" data-header>
+    <a class="brand" href="../index.html" aria-label="返回个人简历">
+      <span class="brand-mark" aria-hidden="true">GC</span>
+      <span>
+        <strong>郭晨</strong>
+        <small>Project</small>
+      </span>
+    </a>
+
+    <nav class="project-header-nav" aria-label="项目页导航">
+      <a href="../index.html#project">返回简历</a>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="project-hero section-shell" aria-labelledby="project-name">
+      <div class="project-intro">
+        <div class="project-heading">
+          <p class="eyebrow">Android 个人项目</p>
+          <h1 id="project-name">小画家</h1>
+          <p class="project-role">多人实时协作绘画板</p>
+        </div>
+        <div class="project-summary">
+          <p class="project-lead">
+            基于自定义 View / Canvas 完成绘图工具，通过 Ktor WebSocket
+            将同一房间内的画布操作实时同步给多人。
+          </p>
+        </div>
+        <ul class="project-tags" aria-label="项目技术栈">
+          <li>MVVM</li>
+          <li>Custom View</li>
+          <li>Canvas</li>
+          <li>Ktor WebSocket</li>
+        </ul>
+      </div>
+
+      <div
+        class="shot-carousel"
+        data-carousel
+        role="region"
+        aria-roledescription="轮播"
+        aria-label="小画家项目功能截图"
+      >
+        <div class="carousel-meta">
+          <span class="carousel-kicker"><i aria-hidden="true"></i>功能实录</span>
+          <div class="carousel-state">
+            <span aria-live="off" data-carousel-status>1 / 6</span>
+            <button
+              class="carousel-toggle"
+              type="button"
+              aria-pressed="false"
+              aria-label="暂停自动播放"
+              data-carousel-toggle
+            >
+              <span aria-hidden="true" data-carousel-toggle-icon>Ⅱ</span>
+              <span data-carousel-toggle-label>暂停</span>
+            </button>
+          </div>
+        </div>
+        <div class="carousel-viewport">
+          <div class="carousel-track" data-carousel-track>
+            <article class="shot-card" data-carousel-slide>
+              <button
+                class="shot-image-button"
+                type="button"
+                data-lightbox-trigger
+                aria-label="放大查看：加入房间"
+              >
+                <img
+                  src="../assets/projects/little-painter/join-room.png"
+                  alt="小画家 App 加入房间页面，列出可加入的协作房间和房主信息"
+                  width="1990"
+                  height="1228"
+                  loading="eager"
+                  fetchpriority="high"
+                  decoding="async"
+                >
+              </button>
+              <div class="shot-caption">
+                <span>01 / 06</span>
+                <div>
+                  <h2>加入房间</h2>
+                  <p>浏览协作房间，查看房主、作品预览与房间状态。</p>
+                </div>
+              </div>
+            </article>
+            <article class="shot-card" data-carousel-slide>
+              <button
+                class="shot-image-button"
+                type="button"
+                data-lightbox-trigger
+                aria-label="放大查看：创建房间"
+              >
+                <img
+                  src="../assets/projects/little-painter/create-room.png"
+                  alt="小画家 App 创建房间页面，可填写房间信息并选择作品模板"
+                  width="1990"
+                  height="1236"
+                  loading="lazy"
+                  decoding="async"
+                >
+              </button>
+              <div class="shot-caption">
+                <span>02 / 06</span>
+                <div>
+                  <h2>创建房间</h2>
+                  <p>设置房间信息，并选择已有作品作为协作模板。</p>
+                </div>
+              </div>
+            </article>
+            <article class="shot-card" data-carousel-slide>
+              <button
+                class="shot-image-button"
+                type="button"
+                data-lightbox-trigger
+                aria-label="放大查看：选择背景图片"
+              >
+                <img
+                  src="../assets/projects/little-painter/background-picker.png"
+                  alt="小画家 App 绘图画布打开背景图片选择面板"
+                  width="1990"
+                  height="1234"
+                  loading="lazy"
+                  decoding="async"
+                >
+              </button>
+              <div class="shot-caption">
+                <span>03 / 06</span>
+                <div>
+                  <h2>选择背景图片</h2>
+                  <p>从图片素材中切换画布背景，快速进入创作。</p>
+                </div>
+              </div>
+            </article>
+            <article class="shot-card" data-carousel-slide>
+              <button
+                class="shot-image-button"
+                type="button"
+                data-lightbox-trigger
+                aria-label="放大查看：橡皮擦"
+              >
+                <img
+                  src="../assets/projects/little-painter/eraser-tool.png"
+                  alt="小画家 App 绘图画布，左侧工具栏选中橡皮擦"
+                  width="1990"
+                  height="1236"
+                  loading="lazy"
+                  decoding="async"
+                >
+              </button>
+              <div class="shot-caption">
+                <span>04 / 06</span>
+                <div>
+                  <h2>橡皮擦</h2>
+                  <p>画布工具栏支持橡皮擦、撤销与图形操作。</p>
+                </div>
+              </div>
+            </article>
+            <article class="shot-card" data-carousel-slide>
+              <button
+                class="shot-image-button"
+                type="button"
+                data-lightbox-trigger
+                aria-label="放大查看：自定义 View 调色盘"
+              >
+                <img
+                  src="../assets/projects/little-painter/color-picker.png"
+                  alt="小画家 App 绘图画布打开自定义 View 调色盘"
+                  width="1990"
+                  height="1234"
+                  loading="lazy"
+                  decoding="async"
+                >
+              </button>
+              <div class="shot-caption">
+                <span>05 / 06</span>
+                <div>
+                  <h2>自定义 View 调色盘</h2>
+                  <p>通过自定义 View 选色，并调节饱和度与亮度。</p>
+                </div>
+              </div>
+            </article>
+            <article class="shot-card" data-carousel-slide>
+              <button
+                class="shot-image-button"
+                type="button"
+                data-lightbox-trigger
+                aria-label="放大查看：多人协作绘制"
+              >
+                <img
+                  src="../assets/projects/little-painter/collaborative-drawing.png"
+                  alt="小画家 App 多人协作绘图画布，显示参与者的实时绘制状态"
+                  width="1990"
+                  height="1230"
+                  loading="lazy"
+                  decoding="async"
+                >
+              </button>
+              <div class="shot-caption">
+                <span>06 / 06</span>
+                <div>
+                  <h2>多人协作绘制</h2>
+                  <p>同房间用户实时同步绘图内容与光标状态。</p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="carousel-controls">
+          <button class="carousel-arrow" type="button" aria-label="上一张截图" data-carousel-prev>←</button>
+          <div class="carousel-thumbs" data-carousel-dots aria-label="选择项目截图">
+            <button class="carousel-thumb is-active" type="button" data-carousel-thumb aria-label="查看加入房间截图" aria-current="true">
+              <img src="../assets/projects/little-painter/join-room.png" alt="" width="1990" height="1228" loading="eager">
+              <span>加入房间</span>
+            </button>
+            <button class="carousel-thumb" type="button" data-carousel-thumb aria-label="查看创建房间截图">
+              <img src="../assets/projects/little-painter/create-room.png" alt="" width="1990" height="1236" loading="lazy">
+              <span>创建房间</span>
+            </button>
+            <button class="carousel-thumb" type="button" data-carousel-thumb aria-label="查看选择背景图片截图">
+              <img src="../assets/projects/little-painter/background-picker.png" alt="" width="1990" height="1234" loading="lazy">
+              <span>背景图片</span>
+            </button>
+            <button class="carousel-thumb" type="button" data-carousel-thumb aria-label="查看橡皮擦截图">
+              <img src="../assets/projects/little-painter/eraser-tool.png" alt="" width="1990" height="1236" loading="lazy">
+              <span>橡皮擦</span>
+            </button>
+            <button class="carousel-thumb" type="button" data-carousel-thumb aria-label="查看自定义 View 调色盘截图">
+              <img src="../assets/projects/little-painter/color-picker.png" alt="" width="1990" height="1234" loading="lazy">
+              <span>调色盘</span>
+            </button>
+            <button class="carousel-thumb" type="button" data-carousel-thumb aria-label="查看多人协作绘制截图">
+              <img src="../assets/projects/little-painter/collaborative-drawing.png" alt="" width="1990" height="1230" loading="lazy">
+              <span>多人协作</span>
+            </button>
+          </div>
+          <button class="carousel-arrow" type="button" aria-label="下一张截图" data-carousel-next>→</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="project-core section-shell" aria-labelledby="project-core-title">
+      <div class="compact-title">
+        <p class="eyebrow">Core implementation</p>
+        <h2 id="project-core-title">核心实现</h2>
+      </div>
+
+      <ol class="core-list">
+        <li>
+          <span>01</span>
+          <p>采用 MVVM 设计模式，使用 ViewModel 管理用户、作品与画布状态，结合 ViewBinding、Navigation 完成页面交互和导航。</p>
+        </li>
+        <li>
+          <span>02</span>
+          <p>基于自定义 View / Canvas 搭建绘画板，统一处理手势采集与图形渲染，支持自由曲线、几何图形、橡皮擦、填色、撤销及移动缩放。</p>
+        </li>
+        <li>
+          <span>03</span>
+          <p>统一封装图形类型、坐标、画笔样式与轨迹点，将画布修改记录为可序列化操作，用于界面渲染、作品保存和网络同步。</p>
+        </li>
+        <li>
+          <span>04</span>
+          <p>基于 Ktor WebSocket 实现多人实时协作，本地绘制即时渲染并同步至同房间用户，支持多人同时在线绘制和实时光标同步。</p>
+        </li>
+      </ol>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span data-current-year>2026</span> 郭晨 · 小画家</p>
+    <a href="../index.html">返回简历 →</a>
+  </footer>
+
+  <dialog class="shot-lightbox" data-lightbox aria-labelledby="lightbox-caption">
+    <div class="lightbox-panel">
+      <div class="lightbox-toolbar">
+        <p id="lightbox-caption" data-lightbox-caption>项目截图放大预览</p>
+        <button type="button" data-lightbox-close aria-label="关闭截图预览">关闭</button>
+      </div>
+      <img
+        data-lightbox-image
+        src="../assets/projects/little-painter/join-room.png"
+        alt=""
+        width="1990"
+        height="1228"
+      >
+    </div>
+  </dialog>
+
+  <script src="../script.js"></script>
+</body>
+</html>
